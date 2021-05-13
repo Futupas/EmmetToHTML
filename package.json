@@ -1,0 +1,31 @@
+{
+  "name": "emmet-to-html",
+  "version": "1.0.0",
+  "description": "JS (Originally written in typescript) library to easily convert Emmet string to HTML structure",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start": "npm run build && node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Futupas/EmmetToHTML.git"
+  },
+  "author": "Futupas, Maksym Diachenko, Rodion Tkachenko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Futupas/EmmetToHTML/issues"
+  },
+  "homepage": "https://github.com/Futupas/EmmetToHTML#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "ts-loader": "^8.0.14",
+    "tslint": "^6.1.3",
+    "typescript": "^4.1.3",
+    "webpack": "^5.11.1",
+    "webpack-cli": "^4.3.1"
+  }
+}
