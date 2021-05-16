@@ -13,7 +13,7 @@ export function makePseudoHtml(str: string): PseudoHTML[] {
 function stringToPseudoHTML(str: string): PseudoHTML[] {
     const splitted = splitStringToPseudoHTMLElements(str);
 
-    const pseudoParent = new PseudoHTML('PSEUDO_PARENT', undefined);
+    const pseudoParent = new PseudoHTML('PSEUDO_PARENT', undefined, undefined);
     // Very good kostyl
     pseudoParent.parent = pseudoParent;
 
@@ -23,25 +23,25 @@ function stringToPseudoHTML(str: string): PseudoHTML[] {
         let element = celement;
         let parent = currentElement.parent;
         // check changing levels
-        if (element.startsWith('>')) {
+        if (element.str.startsWith('>')) {
             parent = currentElement;
-            element = '+' + element.substring(1);
-        } else if (element.startsWith('^')) {
-            while (element.startsWith('^')) {
+            element.str = '+' + element.str.substring(1);
+        } else if (element.str.startsWith('^')) {
+            while (element.str.startsWith('^')) {
                 currentElement = currentElement.parent;
                 parent = currentElement.parent;
-                element = element.substring(1);
+                element.str = element.str.substring(1);
             }
-            if (element === '') continue;
-            element = '+' + element;
+            if (element.str === '') continue;
+            element.str = '+' + element;
         }
 
         // one level
-        if (element.startsWith('+')) {
-            if (element.charAt(1) === '(') {
-                const pseudoHtmls = stringToPseudoHTML(element.substring(2, element.length-1));
+        if (element.str.startsWith('+')) {
+            if (element.str.charAt(1) === '(') {
+                const pseudoHtmls = stringToPseudoHTML(element.str.substring(2, element.str.length-1));
                 if (pseudoHtmls.length < 1) {
-                    throw new EmmetStringParsingError('Error parsing with brackets (I guess, it\'s because of there are empty brackets)');
+                    throw new EmmetStringParsingError('Error parsing with brackets (I guess, it\'s because of there are empty brackets)', element.pos);
                 } else {
                     currentElement = pseudoHtmls[0];
                 }
@@ -50,7 +50,7 @@ function stringToPseudoHTML(str: string): PseudoHTML[] {
                     parent.children.push(addedElement);
                 }
             } else {
-                const newElement = new PseudoHTML(element.substring(1), parent);
+                const newElement = new PseudoHTML(element.str.substring(1), parent, element.pos);
                 parent.children.push(newElement);
                 currentElement = newElement;
             }
@@ -71,18 +71,20 @@ function stringToPseudoHTML(str: string): PseudoHTML[] {
  * @param str
  * @returns
  */
-function splitStringToPseudoHTMLElements(str: string): string[] {
-    const resultArr: string[] = [];
+function splitStringToPseudoHTMLElements(input: string): { str: string, pos: number }[] {
+    const resultArr: {str: string, pos: number}[] = [];
     let symbol = '+';
-    let firstOccurence = getFirstOccurenceOfSpecialCharacter(str);
-    while (firstOccurence !== false && str.length > 0) {
-        const tag = symbol + str.substring(0, firstOccurence);
-        resultArr.push(tag);
-        symbol = str.charAt(firstOccurence);
-        str = str.substring(firstOccurence + 1);
-        firstOccurence = getFirstOccurenceOfSpecialCharacter(str);
+    let firstOccurence = getFirstOccurenceOfSpecialCharacter(input);
+    let position = 0;
+    while (firstOccurence !== false && input.length > 0) {
+        const tag = symbol + input.substring(0, firstOccurence);
+        resultArr.push({str: tag, pos: position});
+        symbol = input.charAt(firstOccurence);
+        input = input.substring(firstOccurence + 1);
+        position += firstOccurence;
+        firstOccurence = getFirstOccurenceOfSpecialCharacter(input);
     }
-    resultArr.push(symbol + str);
+    resultArr.push({str: (symbol + input), pos: position});
 
     return resultArr;
 }
@@ -126,4 +128,11 @@ function getFirstOccurenceOfSpecialCharacter(str: string): number | false {
 
 
 
-class EmmetStringParsingError extends Error { }
+class EmmetStringParsingError extends Error {
+    public readonly position: number;
+
+    constructor(message: string, position?: number) {
+        super(message);
+        this.position = position;
+    }
+}

@@ -3,6 +3,7 @@ export class PseudoHTML {
 
     public constructor(
         public tag: string,
-        public parent?: PseudoHTML
+        public parent?: PseudoHTML,
+        public startingInString?: number,
     ) { }
 }

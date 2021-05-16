@@ -10,8 +10,16 @@ _global.globalFunction = (a: any) => {
     console.log("from global function");
 };
 
-(String.prototype as any).toHtml = () => "htmlled string";
-
+// String.prototype.toHtml = (a: any) => {
+//     console.log(this);
+//     console.log(a);
+//     return emmetToPseudoHTML(this);
+// };
+// (HTMLElement.prototype as any).appendChildren = (...children: HTMLElement[]) => {
+//     for (const child of children) {
+//         (this as HTMLElement).appendChild(child);
+//     }
+// };
 
 
 export function emmetToHTML(emmetString: string): HTMLElement[] {
@@ -34,3 +42,5 @@ export function appendEmmet(emmetString: string, container: HTMLElement): void {
         container.appendChild(el);
     });
 }
+
+_global.emmetToPseudoHTML = emmetToPseudoHTML;
