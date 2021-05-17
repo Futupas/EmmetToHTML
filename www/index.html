@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+      
     <script>
        function convertText() {
         var str = document.getElementById("textinarea").value;
         document.getElementById("textoutarea").value = str;
+         document.getElementById("iframeResult").srcdoc = "<html><body>"+str+"</body></html>";
        }
 
        function removeHint() {
@@ -21,8 +23,9 @@
     <body>  
         <script src="emmet-to-html.js"></script>
         <script src="tests.js"></script>
-        <img id="I" href="index.html" src="imgsrc/gooddesign.png" type="image" style="margin-left:20%;
-         width:60%; max-width:60%; height:auto; background-color:darkviolet;"> <br>
+         <div class="topdiv" >
+         <img id="I" href="index.html" src="imgsrc/17des.jpg" type="image" style="width:60%; max-width:60%; height:auto;"> <br>
+         </div>
             
              <h2 style="margin-left: 10%;max-width:80%;">EmmetToHTML - JS library to easily convert emmet string to HTML structure</h2>
              <div class="plaitext" style="margin-left: 10%; max-width: 80%;">
@@ -32,12 +35,11 @@
                 ut aliquip ex ea commodo consequat. 
              </div> <br>
 
-             <textarea  type="text" id="textinarea" name="textinarea" style="margin-left:10%; line-height:28px; padding: 10px 10px;
-             width:80%; max-width:80%; font-family:'Courier New', Courier, monospace;"
-             onclick="removeHint()">Enter your code here.</textarea> <br>
+             <textarea  type="text" class = "textinarea" id="textinarea" onclick="removeHint()">Enter your code here.</textarea> 
 
-             <textarea type="text" id="textoutarea" name="textoutarea" style="margin-left:10%; line-height:28px; padding: 10px 10px;
-             width:80%; max-width:80%; font-family:'Courier New', Courier, monospace;">  </textarea> <br> <br>
+             <textarea readonly class = "textoutarea" id="textoutarea">  </textarea>
+             
+             <iframe frameborder="0" frameborder="yes" class="iframeResult" id="iframeResult" name="iframeResult" allowfullscreen="true"></iframe>
 
              <button  name="convert" onclick="convertText()" > <b>Convert now!</b> </button> <br> <br> <br>
 

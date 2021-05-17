@@ -13,12 +13,21 @@ button {
 }
 
 body {
-    background: url('imgsrc/bgimage.jpg') no-repeat center center fixed;
+    overflow: hidden;
+    margin: 0;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    background: url('imgsrc/bgimage.jpg') no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
 }
+
+.topdiv {
+    background-color:#1E1323;
+ }
   
 button:hover {
     background-color:rgb(255, 255, 255); /* Green */
@@ -33,19 +42,52 @@ h2 {
 
 .plaitext{
     text-align:center; 
+    color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.iframeResult {
+    border: 2px solid black;
+    line-height:28px; 
+    background-color: white;
+    width:40%; 
+    max-width:40%;
+    border-radius: 8px; 
+    border-color: black;
+}
+
+.textinarea {
+    border: 2px solid black;
+    border-radius: 8px; 
+    margin-left:10%;
+    line-height:28px; 
+    padding: 10px 10px;
+    width:80%; 
+    max-width:80%; 
+    font-family:'Courier New', Courier, monospace; resize: none;
+}
+
+.textoutarea {
+    border: 2px solid black;
+    border-radius: 8px; 
+    margin-left:10%;
+    line-height:28px; 
+    padding: 47px 10px;
+    width:40%; 
+    max-width:40%; 
+    font-family:'Courier New', Courier, monospace; resize: none;
 }
 
 .external-links{
     border-color: white;
-    background-color:darkviolet;
+    background-color:ABA1AC;
     border-radius: 8px; 
     border-bottom-color: black;
 }
 
 .external-links:hover{
     border-color: black;
-    background-color:darkmagenta;
+    background-color:ABA1AC;
     border-radius: 8px; 
     border-bottom-color: black;
 }
