@@ -1,13 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emmet to HTML</title>
-</head>
-<body>
-    
-    <script src="emmet-to-html.js"></script>
-    <script src="tests.js"></script>
-</body>
+<html>
+    <script>
+       function convertText() {
+        var str = document.getElementById("textinarea").value;
+        document.getElementById("textoutarea").value = str;
+       }
+
+       function removeHint() {
+        document.getElementById("textinarea").value = "";
+       }
+
+    </script>
+    <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title> EmmetToHTML </title>
+       <link rel="icon" href="imgsrc/icon.jpg" type="image/icon type">
+       <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>  
+        <script src="emmet-to-html.js"></script>
+        <script src="tests.js"></script>
+        <img id="I" href="index.html" src="imgsrc/gooddesign.png" type="image" style="margin-left:20%;
+         width:60%; max-width:60%; height:auto; background-color:darkviolet;"> <br>
+            
+             <h2 style="margin-left: 10%;max-width:80%;">EmmetToHTML - JS library to easily convert emmet string to HTML structure</h2>
+             <div class="plaitext" style="margin-left: 10%; max-width: 80%;">
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diem nonummy nibh 
+                euismod tincidunt ut lacreet dolore magna aliguam erat volutpat. Ut wisis enim 
+                ad minim veniam, quis nostrud exerci tution ullamcorper suscipit lobortis nisl 
+                ut aliquip ex ea commodo consequat. 
+             </div> <br>
+
+             <textarea  type="text" id="textinarea" name="textinarea" style="margin-left:10%; line-height:28px; padding: 10px 10px;
+             width:80%; max-width:80%; font-family:'Courier New', Courier, monospace;"
+             onclick="removeHint()">Enter your code here.</textarea> <br>
+
+             <textarea type="text" id="textoutarea" name="textoutarea" style="margin-left:10%; line-height:28px; padding: 10px 10px;
+             width:80%; max-width:80%; font-family:'Courier New', Courier, monospace;">  </textarea> <br> <br>
+
+             <button  name="convert" onclick="convertText()" > <b>Convert now!</b> </button> <br> <br> <br>
+
+
+
+            <table align="center" style="max-width: 10%;" class="external-links"> <tr>
+              <td align="center"> <a href="https://www.github.com/" target="_blank">
+                <img id="git" src="https://image.flaticon.com/icons/png/512/25/25231.png" 
+                width="50%">
+              </a> </td>
+              <td align="center"> <a href="https://www.patreon.com/" target="_blank">
+                 <img id="pat" src="https://cdn.icon-icons.com/icons2/2429/PNG/512/patreon_logo_icon_147253.png" 
+                 width="50%"> 
+              </a> </td> </tr>
+           </table>
+
+
+           
+    </body>
 </html>
