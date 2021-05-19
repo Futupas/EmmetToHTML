@@ -74,7 +74,7 @@ function stringToPseudoHTML(str: string, startPos = 0): PseudoHTML[] {
  * @param str
  * @returns
  */
-export function splitStringToPseudoHTMLElements(input: string): { str: string, pos: number }[] {
+function splitStringToPseudoHTMLElements(input: string): { str: string, pos: number }[] {
     const resultArr: {str: string, pos: number}[] = [];
     let symbol = '+';
     let firstOccurence = getFirstOccurenceOfSpecialCharacter(input);
