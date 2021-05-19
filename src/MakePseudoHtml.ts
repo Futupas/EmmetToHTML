@@ -10,7 +10,7 @@ export function makePseudoHtml(str: string): PseudoHTML[] {
  * @param str
  * @returns
  */
-function stringToPseudoHTML(str: string): PseudoHTML[] {
+function stringToPseudoHTML(str: string, startPos = 0): PseudoHTML[] {
     const splitted = splitStringToPseudoHTMLElements(str);
 
     const pseudoParent = new PseudoHTML('PSEUDO_PARENT', undefined, undefined);
@@ -20,7 +20,8 @@ function stringToPseudoHTML(str: string): PseudoHTML[] {
     let currentElement = pseudoParent;
 
     for (const celement of splitted) {
-        let element = celement;
+        const element = celement;
+        element.pos += startPos;
         let parent = currentElement.parent;
         // check changing levels
         if (element.str.startsWith('>')) {
@@ -31,15 +32,17 @@ function stringToPseudoHTML(str: string): PseudoHTML[] {
                 currentElement = currentElement.parent;
                 parent = currentElement.parent;
                 element.str = element.str.substring(1);
+                element.pos++;
             }
             if (element.str === '') continue;
-            element.str = '+' + element;
+            element.str = '+' + element.str;
+            element.pos--;
         }
 
         // one level
         if (element.str.startsWith('+')) {
             if (element.str.charAt(1) === '(') {
-                const pseudoHtmls = stringToPseudoHTML(element.str.substring(2, element.str.length-1));
+                const pseudoHtmls = stringToPseudoHTML(element.str.substring(2, element.str.length-1), element.pos + 2);
                 if (pseudoHtmls.length < 1) {
                     throw new EmmetStringParsingError('Error parsing with brackets (I guess, it\'s because of there are empty brackets)', element.pos);
                 } else {
@@ -71,17 +74,17 @@ function stringToPseudoHTML(str: string): PseudoHTML[] {
  * @param str
  * @returns
  */
-function splitStringToPseudoHTMLElements(input: string): { str: string, pos: number }[] {
+export function splitStringToPseudoHTMLElements(input: string): { str: string, pos: number }[] {
     const resultArr: {str: string, pos: number}[] = [];
     let symbol = '+';
     let firstOccurence = getFirstOccurenceOfSpecialCharacter(input);
-    let position = 0;
+    let position = -1;
     while (firstOccurence !== false && input.length > 0) {
         const tag = symbol + input.substring(0, firstOccurence);
         resultArr.push({str: tag, pos: position});
         symbol = input.charAt(firstOccurence);
         input = input.substring(firstOccurence + 1);
-        position += firstOccurence;
+        position += (firstOccurence + 1);
         firstOccurence = getFirstOccurenceOfSpecialCharacter(input);
     }
     resultArr.push({str: (symbol + input), pos: position});

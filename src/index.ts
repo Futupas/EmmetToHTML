@@ -1,4 +1,4 @@
-import { makePseudoHtml } from './MakePseudoHtml';
+import { makePseudoHtml, splitStringToPseudoHTMLElements } from './MakePseudoHtml';
 import { PseudoHTML } from './PseudoHTML';
 import { prepareString } from './PrepareEmmetString';
 // import { PseudoHTML } from './PseudoHTML';
@@ -44,3 +44,4 @@ export function appendEmmet(emmetString: string, container: HTMLElement): void {
 }
 
 _global.emmetToPseudoHTML = emmetToPseudoHTML;
+_global.splitStringToPseudoHTMLElements = splitStringToPseudoHTMLElements;
