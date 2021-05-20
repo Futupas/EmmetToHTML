@@ -1,3 +1,4 @@
+import { EmmetStringParsingError } from './EmmetStringParsingError';
 import { PseudoHTML } from './PseudoHTML';
 
 export function makePseudoHtml(str: string): PseudoHTML[] {
@@ -127,15 +128,4 @@ function getFirstOccurenceOfSpecialCharacter(str: string): number | false {
     if (indexOfUp === -1) indexOfUp = Math.max(indexOfPlus, indexOfNesting);
 
     return Math.min(indexOfPlus, indexOfNesting, indexOfUp) + startIndex;
-}
-
-
-
-class EmmetStringParsingError extends Error {
-    public readonly position: number;
-
-    constructor(message: string, position?: number) {
-        super(message);
-        this.position = position;
-    }
 }
