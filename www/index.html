@@ -1,62 +1,65 @@
 <!DOCTYPE html>
 <html>
-      
-    <script>
-       function convertText() {
-        var str = document.getElementById("textinarea").value;
-        document.getElementById("textoutarea").value = str;
-         document.getElementById("iframeResult").srcdoc = "<html><body>"+str+"</body></html>";
-       }
-
-       function removeHint() {
-        document.getElementById("textinarea").value = "";
-       }
-
-    </script>
-    <head>
-       <meta charset="UTF-8">
-       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <title> EmmetToHTML </title>
-       <link rel="icon" href="imgsrc/icon.jpg" type="image/icon type">
-       <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>  
-        <script src="emmet-to-html.js"></script>
-        <script src="tests.js"></script>
-         <div class="topdiv" >
-         <img id="I" href="index.html" src="imgsrc/17des.jpg" type="image" style="width:60%; max-width:60%; height:auto;"> <br>
-         </div>
-            
-             <h2 style="margin-left: 10%;max-width:80%;">EmmetToHTML - JS library to easily convert emmet string to HTML structure</h2>
-             <div class="plaitext" style="margin-left: 10%; max-width: 80%;">
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diem nonummy nibh 
-                euismod tincidunt ut lacreet dolore magna aliguam erat volutpat. Ut wisis enim 
-                ad minim veniam, quis nostrud exerci tution ullamcorper suscipit lobortis nisl 
-                ut aliquip ex ea commodo consequat. 
-             </div> <br>
-
-             <textarea  type="text" class = "textinarea" id="textinarea" onclick="removeHint()">Enter your code here.</textarea> 
-
-             <textarea readonly class = "textoutarea" id="textoutarea">  </textarea>
-             
-             <iframe frameborder="0" frameborder="yes" class="iframeResult" id="iframeResult" name="iframeResult" allowfullscreen="true"></iframe>
-
-             <button  name="convert" onclick="convertText()" > <b>Convert now!</b> </button> <br> <br> <br>
 
 
 
-            <table align="center" style="max-width: 10%;" class="external-links"> <tr>
-              <td align="center"> <a href="https://www.github.com/" target="_blank">
-                <img id="git" src="https://image.flaticon.com/icons/png/512/25/25231.png" 
-                width="50%">
-              </a> </td>
-              <td align="center"> <a href="https://www.patreon.com/" target="_blank">
-                 <img id="pat" src="https://cdn.icon-icons.com/icons2/2429/PNG/512/patreon_logo_icon_147253.png" 
-                 width="50%"> 
-              </a> </td> </tr>
-           </table>
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>EmmetToHTML</title>
+   <link rel="icon" href="imgsrc/icon.jpg" type="image/icon type">
+   <link />
+   <link rel="stylesheet" href="styles.css">
+   <link />
 
+   <script>
+      function convertText() {
+         var str = document.getElementById("textinarea").value;
+         document.getElementById("textoutarea").value = str;
+         document.getElementById("iframeResult").srcdoc = "<html><body>" + str + "</body></html>";
+      }
+   </script>
 
-           
-    </body>
+</head>
+
+<body>
+   <script src="emmet-to-html.js"></script>
+   <script src="tests.js"></script>
+   <div class="topdiv">
+      <img id="" src="imgsrc/17des.jpg" type="image" style="width:60%; max-width:60%; height:auto;"> <br>
+   </div>
+
+   <div class="toptext">
+      <h2>EmmetToHTML - JS library to easily convert emmet string to HTML structure</h2>
+      <div class="plaitext">
+         Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diem nonummy nibh
+         euismod tincidunt ut lacreet dolore magna aliguam erat volutpat. Ut wisis enim
+         ad minim veniam, quis nostrud exerci tution ullamcorper suscipit lobortis nisl
+         ut aliquip ex ea commodo consequat. </div>
+   </div>
+
+   <div class="iofields">
+      <input type="text" rows="1" oninput="convertText()" type="text" id="textinarea" class="textinarea"
+         placeholder="write emmet here"> </input>
+      <div class="outarea">
+         <textarea readonly id="textoutarea" class="textoutarea"></textarea><iframe scrolling="yes" id="iframeResult"
+            frameborder="0" frameborder="yes" class="iframeResult" allowfullscreen="true"></iframe>
+      </div>
+   </div>
+
+   <!-- 
+   <table align="center" style="max-width: 10%;" class="external-links">
+      <tr>
+         <td align="center"> <a href="https://www.github.com/" target="_blank">
+               <img id="git" src="https://image.flaticon.com/icons/png/512/25/25231.png" width="50%">
+            </a> </td>
+         <td align="center"> <a href="https://www.patreon.com/" target="_blank">
+               <img id="pat" src="https://cdn.icon-icons.com/icons2/2429/PNG/512/patreon_logo_icon_147253.png"
+                  width="50%">
+            </a> </td>
+      </tr>
+   </table> -->
+
+</body>
+
 </html>

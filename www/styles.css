@@ -1,62 +1,45 @@
-button {
-    margin-left: 40%;
-    transition-duration: 0.4s;
-    width:20%; 
-    max-width:20%; 
-    padding: 10px 10px;
-    border-radius: 8px; 
-    border-color: rgb(255, 255, 255);
-    color:rgb(255, 255, 255);
-    background-color: black;
-    text-align:center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
 body {
     overflow: hidden;
     margin: 0;
     margin-left: 0px;
     margin-right: 0px;
     margin-top: 0px;
-    background: url('imgsrc/bgimage.jpg') no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    background-color:black;
 }
 
 .topdiv {
     background-color:#1E1323;
  }
   
-button:hover {
-    background-color:rgb(255, 255, 255); /* Green */
-    color: rgb(0, 0, 0);
+
+.toptext {
+    margin-left: 10%;
+    max-width:80%;
 }
 
 
 h2 {
+    color: #ACA2AD;
     text-align:center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .plaitext{
+    color: #ACA2AD;
     text-align:center; 
-    color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.iframeResult {
-    border: 2px solid black;
-    line-height:28px; 
-    background-color: white;
-    width:40%; 
-    max-width:40%;
-    border-radius: 8px; 
-    border-color: black;
+.iofields {
+margin-top: 3%;
+font-family:'Courier New', Courier, monospace; resize: none;
 }
 
-.textinarea {
+input {
     border: 2px solid black;
     border-radius: 8px; 
     margin-left:10%;
@@ -64,6 +47,7 @@ h2 {
     padding: 10px 10px;
     width:80%; 
     max-width:80%; 
+    overflow:hidden;
     font-family:'Courier New', Courier, monospace; resize: none;
 }
 
@@ -75,7 +59,18 @@ h2 {
     padding: 47px 10px;
     width:40%; 
     max-width:40%; 
+    height: 50%;
     font-family:'Courier New', Courier, monospace; resize: none;
+}
+
+.iframeResult {
+    border: 2px solid black;
+    background-color: white;
+    width:40%; 
+    max-width:40%;
+    height: 50%;
+    border-radius: 8px; 
+    border-color: black;
 }
 
 .external-links{
