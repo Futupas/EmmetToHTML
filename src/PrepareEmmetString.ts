@@ -1,15 +1,31 @@
-/**
- *
- * @param notPreparedString
- * @returns
- */
-export function prepareString(notPreparedString: string): string {
-    // TODO make this method
-/*
-1. All '\specialcharacter' replace with appropriate &... (https://www.w3schools.com/html/html_symbols.asp)
-1.1. Special characters: >{}()[]"'\+^
-2. Everything inside {} replace also (it's just text)
-3. Maybe, there's something else, but now it's enough
-*/
-    return notPreparedString;
-}
+
+ export function prepareString(notPreparedString: string): void {
+    if (notPreparedString[0] === ' ') {
+        console.error('Found space on the start');
+        return;
+    }
+    notPreparedString.trim();
+
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < notPreparedString.length; i++) {
+        if (notPreparedString[i] === ' ') {
+            console.error('Found space on${i + 1} position');
+            return;
+        }
+        if (notPreparedString[i] === '{') {
+            while (notPreparedString[i] !== '}') {
+                if (notPreparedString[i] === '&') {
+                    console.log('looks like a start of special character')
+                    // place for special character
+                }
+            }
+        }
+    }
+
+
+
+// let data: Array<string> = ['qwdqwdqwd', 'qwdqwdqwdqwd', '   qwdqwdqwd   ', 'dqwdwdqwq w dqwd qwd qd']
+// data.forEach((elem) => {
+//     parser(elem)
+// })
+ }
