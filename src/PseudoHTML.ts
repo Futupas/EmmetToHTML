@@ -43,6 +43,9 @@ useful docs: https://docs.emmet.io/cheat-sheet/
         const tagName = parsed.tagName || 'div';
         return document.createElement(tagName);
     }
+
+    /** parses serial nuns (depending on its number) like '...$...', $@2 etc */
+    protected parseNumInString(str: string, serial: number) { }
 }
 
 export interface IParsedPseudoHTML {
