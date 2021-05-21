@@ -44,3 +44,22 @@ export function appendEmmet(emmetString: string, container: HTMLElement): void {
 }
 
 _global.emmetToPseudoHTML = emmetToPseudoHTML;
+
+declare global {
+    interface String {
+        toHtml(): HTMLElement[];
+    }
+    interface HTMLElement {
+        appendChildren(...elements: HTMLElement[]): void;
+    }
+}
+String.prototype.toHtml = () => {
+    const str = String(this);
+    return emmetToHTML(str);
+};
+HTMLElement.prototype.appendChildren = (...elements: HTMLElement[]) => {
+    //todo refactor, make safety
+    for (const el of elements) {
+        (this as HTMLElement).appendChild(el);
+    }
+}
