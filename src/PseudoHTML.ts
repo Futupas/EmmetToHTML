@@ -9,12 +9,12 @@ export class PseudoHTML {
 
     public parse(): IParsedPseudoHTML {
 /*
-input: "span.class1.class2#id1[hello=world num=8 countries='Kosovo DNR USSR']{some text}*15"
+input: "span.class1.class2#id1[hello=world num=8 countries='Kosovo DNR USSR']{some text $@3}*15"
 out: {
-    raw: "span.class1.class2#id1[hello=world num=8 countries='Kosovo DNR USSR']{some text}*15",
+    raw: "span.class1.class$#id1[hello=world num=8 countries='Kosovo DNR USSR']{some text $@3}*15",
     tagName: 'div',
     id: 'id1',
-    classList: ['class1', 'class2'],
+    classList: ['class1', 'class$'],
     attributes: [{
         name: 'hello', value: 'world'
     }, {
@@ -22,7 +22,7 @@ out: {
     }, {
         name: 'countries', value: 'Kosovo DNR USSR'
     }],
-    innerText: 'some text',
+    innerText: 'some text $@3',
     quantity: 15,
 }
 useful docs: https://docs.emmet.io/cheat-sheet/
@@ -45,7 +45,9 @@ useful docs: https://docs.emmet.io/cheat-sheet/
     }
 
     /** parses serial nuns (depending on its number) like '...$...', $@2 etc */
-    protected parseNumInString(str: string, serial: number) { }
+    protected parseNumInString(str: string, serial: number): string {
+        return str;
+    }
 }
 
 export interface IParsedPseudoHTML {
