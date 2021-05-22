@@ -63,8 +63,3 @@ HTMLElement.prototype.appendChildren = (...elements: HTMLElement[]) => {
         (this as HTMLElement).appendChild(el);
     }
 };
-
-_global.parseNumsInEmmet = (str: string, serial: number, quantity: number): string => {
-    const ph = new PseudoHTML('d');
-    return ph.parseNumInString(str, serial, quantity);
-};

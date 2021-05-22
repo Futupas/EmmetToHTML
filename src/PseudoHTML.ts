@@ -47,7 +47,7 @@ useful docs: https://docs.emmet.io/cheat-sheet/
     }
 
     /** parses serial nums (depending on its number) like '...$...', $@2 etc */
-    public parseNumInString(str: string, serial: number, quantity: number): string {
+    protected parseNumInString(str: string, serial: number, quantity: number): string {
         const numsInStr: INumberInString[] = [];
         let currentNumInStr: INumberInString;
         for (let i = 0; i < str.length; i++) {
@@ -130,6 +130,7 @@ interface INumberInString {
     extended: boolean; // has @
     dollars: string;
 }
+
 /** Returns false, if the char is incorrect */
 function isNumber(char: string): boolean {
     const numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
