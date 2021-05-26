@@ -1,92 +1,81 @@
-body {
-    /* overflow: hidden; */
-    margin: 0;
-    margin-left: 0px;
-    margin-right: 0px;
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body > div{
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+}
+div#main{
+    height: 100vh;
+}
+
+div#input {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 8vh;
+    padding: 5px;
+}
+div#htmlcode,
+div#preview{
+    position: absolute;
+    float: left;
+    overflow: auto;
+}
+
+@media (orientation: landscape) {
+    div#htmlcode {
+        top: 8vh;
+        left: 0px;
+        width: 50%;
+        height: 92vh;
+    }
+    div#preview {
+        top: 8vh;
+        left: 50%;
+        width: 50%;
+        height: 92vh;
+    }
+}
+@media (orientation: portrait) {
+    div#htmlcode {
+        top: 8vh;
+        left: 0px;
+        width: 100%;
+        height: 46vh;
+    }
+    div#preview {
+        top: 54vh;
+        left: 0px;
+        width: 100%;
+        height: 46vh;
+    }
+}
+
+
+div#input > input{
+    line-height: 5vh;
+    font-size: 2.5vh;
+    border: 2px solid gray;
+    border-radius: 0px;
+    outline: none !important;
+    width: 100%;
+    margin-top: calc(3vh / 2 - 2px);
+}
+div#input > input:focus{
+    border-color: black;
+}
+
+div#htmlcode > div,
+div#preview > div{
+    margin: 5px;
     margin-top: 0px;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    background-color:black;
+    border: 2px solid gray;
+    padding: 10px;
 }
-
-.topdiv {
-    background-color:#1E1323;
- }
-  
-
-.toptext {
-    margin-left: 10%;
-    max-width:80%;
-}
-
-
-h2 {
-    color: #ACA2AD;
-    text-align:center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.plaitext{
-    color: #ACA2AD;
-    text-align:center; 
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.iofields {
-margin-top: 3%;
-font-family:'Courier New', Courier, monospace; resize: none;
-}
-
-input {
-    border: 2px solid black;
-    border-radius: 8px; 
-    margin-left:10%;
-    line-height:28px; 
-    padding: 10px 10px;
-    width:80%; 
-    max-width:80%; 
-    overflow:hidden;
-    font-family:'Courier New', Courier, monospace; resize: none;
-}
-
-.textoutarea {
-    border: 2px solid black;
-    border-radius: 8px; 
-    margin-left:10%;
-    line-height:28px; 
-    padding: 47px 10px;
-    width: 39.85%;
-    max-width: 39.85%;
-    height: 50%;
-    font-family:'Courier New', Courier, monospace; resize: none;
-}
-
-.iframeResult {
-    border: 2px solid black;
-    background-color: white;
-    width: 39.85%;
-    max-width: 39.85%;
-    height: 50%;
-    border-radius: 8px; 
-    border-color: black;
-}
-
-.external-links{
-    border-color: white;
-    background-color:ABA1AC;
-    border-radius: 8px; 
-    border-bottom-color: black;
-}
-
-.external-links:hover{
-    border-color: black;
-    background-color:ABA1AC;
-    border-radius: 8px; 
-    border-bottom-color: black;
-}
-
-
-
-
