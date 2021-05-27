@@ -1,5 +1,11 @@
+import { EmmetStringParsingError } from "./EmmetStringParsingError";
+
+
+
 export class PseudoHTML {
     public children: PseudoHTML[] = [];
+ 
+
 
     public constructor(
         public raw: string,
@@ -12,7 +18,7 @@ export class PseudoHTML {
 input: "span.class1.class2#id1[hello=world num=8 countries='Kosovo DNR USSR' autocomplete]{some text $@3}*15"
 out: {
     raw: "span.class1.class$#id1[hello=world num=8 countries='Kosovo DNR USSR' autocomplete]{some text $@3}*15",
-    tagName: 'div',
+    tagName: 'span',
     id: 'id1',
     classList: ['class1', 'class$'],
     attributes: [{
@@ -29,11 +35,102 @@ out: {
 }
 useful docs: https://docs.emmet.io/cheat-sheet/
 */
+        const enum SpecialChars {
+          Tag="",
+          Class=".",
+          Id="#",
+          Attrib="[",
+          EndAttrib="]",
+          Equals="=",
+          InnerText="{",
+          EndInnerText="}",
+          Mult="*"
+        }
+
+        let specialChars = ['','#','.','[','=',']','{','}','*',' '];
+
+
         const result: IParsedPseudoHTML = {
             raw: this.raw,
         };
 
+
         // code here
+        let prevState = "";
+        let currentText : string = "";
+        let beforeEquals : boolean = true;
+        let write : boolean =true;
+        
+        let var_re=/([a-zA-Z]){1}([a-zA-Z]|-|_|[0-9])*/;
+        let tag_re=/(([a-zA-Z]){1}([a-zA-Z]|-|_|[0-9])*)*/;
+
+        for(let i : number  = 0 ; i < this.raw.length; i++) {
+            if(prevState==SpecialChars.EndAttrib || prevState==SpecialChars.EndInnerText) write=false;
+            if(specialChars.includes(this.raw[i])) {
+
+                if(prevState==SpecialChars.InnerText && this.raw[i]==SpecialChars.EndInnerText) {
+                    if(write) result["innerText"]=currentText;
+                    prevState=this.raw[i];
+                    currentText="";     
+                }
+
+                if(prevState==SpecialChars.Attrib && this.raw[i]==SpecialChars.EndAttrib) {
+                    if(write) result["attributes"].push( {"name" : currentText} );
+                    prevState=this.raw[i];
+                    currentText=""; 
+                }
+
+               switch(prevState) {
+                   case SpecialChars.InnerText:
+                        break;
+                   case SpecialChars.Attrib:
+                        break;
+                   case SpecialChars.Tag:
+                        if(!currentText.match(tag_re).includes(currentText))
+                        throw new EmmetStringParsingError("tag name syntax error",i);
+                        if(write) result["tagName"]=currentText;
+                        prevState=this.raw[i];
+                        currentText="";
+                        break;
+                   case SpecialChars.Id:
+                        if(!currentText.match(var_re).includes(currentText))
+                        throw new EmmetStringParsingError("id name syntax error",i);
+                        if(write) result["id"]=currentText;
+                        prevState=this.raw[i];
+                        currentText="";
+                        break;
+                   case SpecialChars.Class:
+                        if(!currentText.match(var_re).includes(currentText))
+                        throw new EmmetStringParsingError("class name syntax error",i);
+                        if(write) result["classList"].push(currentText);
+                        prevState=this.raw[i];
+                        currentText="";
+                        break;
+                   case SpecialChars.EndAttrib:
+                        if(write) result["classList"].push(currentText);
+                        prevState=this.raw[i];
+                        currentText="";
+                        break;
+                   case SpecialChars.EndInnerText:
+                        if(write) result["classList"].push(currentText);
+                        prevState=this.raw[i];
+                        currentText="";                        
+                        break;
+                   case SpecialChars.Mult:
+                        if(write) result["classList"].push(currentText);
+                        prevState=this.raw[i];
+                        currentText="";                        
+                        break;
+
+
+               }
+            } else {
+                currentText+=this.raw[i];
+            }
+
+            
+        }
+        
 
         return result;
     }
@@ -45,6 +142,7 @@ useful docs: https://docs.emmet.io/cheat-sheet/
         const tagName = parsed.tagName || 'div';
         return document.createElement(tagName);
     }
+    
 
     /** parses serial nums (depending on its number) like '...$...', $@2 etc */
     protected parseNumInString(str: string, serial: number, quantity: number): string {
@@ -130,6 +228,8 @@ interface INumberInString {
     extended: boolean; // has @
     dollars: string;
 }
+
+
 
 /** Returns false, if the char is incorrect */
 function isNumber(char: string): boolean {
