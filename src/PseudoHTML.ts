@@ -61,6 +61,8 @@ useful docs: https://docs.emmet.io/cheat-sheet/
         let beforeEquals : boolean = true;
         let write : boolean =true;
         
+        let multiplierNow : boolean = false;
+
         let var_re=/([a-zA-Z]){1}([a-zA-Z]|-|_|[0-9])*/;
         let tag_re=/(([a-zA-Z]){1}([a-zA-Z]|-|_|[0-9])*)*/;
 
@@ -86,23 +88,29 @@ useful docs: https://docs.emmet.io/cheat-sheet/
                    case SpecialChars.Attrib:
                         break;
                    case SpecialChars.Tag:
-                        if(!currentText.match(tag_re).includes(currentText))
-                        throw new EmmetStringParsingError("tag name syntax error",i);
-                        if(write) result["tagName"]=currentText;
+                        if(write) {
+                            result["tagName"]=currentText;
+                            if(!currentText.match(tag_re).includes(currentText))
+                            throw new EmmetStringParsingError("tag name syntax error",i);
+                        } 
                         prevState=this.raw[i];
                         currentText="";
                         break;
                    case SpecialChars.Id:
-                        if(!currentText.match(var_re).includes(currentText))
-                        throw new EmmetStringParsingError("id name syntax error",i);
-                        if(write) result["id"]=currentText;
+                        if(write) {
+                            result["id"]=currentText;
+                            if(!currentText.match(var_re).includes(currentText))
+                            throw new EmmetStringParsingError("id name syntax error",i);
+                        } 
                         prevState=this.raw[i];
                         currentText="";
                         break;
                    case SpecialChars.Class:
-                        if(!currentText.match(var_re).includes(currentText))
-                        throw new EmmetStringParsingError("class name syntax error",i);
-                        if(write) result["classList"].push(currentText);
+                        if(write) {
+                            result["classList"].push(currentText);
+                            if(!currentText.match(var_re).includes(currentText))
+                            throw new EmmetStringParsingError("class name syntax error",i);
+                        }
                         prevState=this.raw[i];
                         currentText="";
                         break;
@@ -120,6 +128,7 @@ useful docs: https://docs.emmet.io/cheat-sheet/
                         if(write) result["classList"].push(currentText);
                         prevState=this.raw[i];
                         currentText="";                        
+                        multiplierNow=true;
                         break;
 
 
