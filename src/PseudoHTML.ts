@@ -39,11 +39,11 @@ useful docs: https://docs.emmet.io/cheat-sheet/
     }
 
     /** Does not append the element anywhere, only makes HTMLElement */
-    public render(): HTMLElement {
+    public render(): HTMLElement[] {
         // todo: write this
         const parsed = this.parse();
         const tagName = parsed.tagName || 'div';
-        return document.createElement(tagName);
+        return [document.createElement(tagName)];
     }
 
     /** parses serial nums (depending on its number) like '...$...', $@2 etc */
