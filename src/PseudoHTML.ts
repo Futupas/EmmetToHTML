@@ -35,15 +35,15 @@ export class PseudoHTML {
         useful docs: https://docs.emmet.io/cheat-sheet/
         */
         const enum SpecialChars {
-            Tag = "",
-            Class = ".",
-            Id = "#",
-            Attrib = "[",
-            EndAttrib = "]",
-            Equals = "=",
-            InnerText = "{",
-            EndInnerText = "}",
-            Mult = "*"
+            Tag = '',
+            Class = '.',
+            Id = '#',
+            Attrib = '[',
+            EndAttrib = ']',
+            Equals = '=',
+            InnerText = '{',
+            EndInnerText = '}',
+            Mult = '*'
         }
 
         const specialChars = ['', '#', '.', '[', '=', ']', '{', '}', '*', ' '];
@@ -55,8 +55,6 @@ export class PseudoHTML {
             classList: [],
         };
 
-
-        // code here
         let prevState = '';
         let currentText: string = '';
         let write: boolean = true;
@@ -128,7 +126,7 @@ export class PseudoHTML {
                             for (let j = 0; j < currentText.length; j++) {
                                 if (currentText[j] === ' ') {
                                     if (isName) isName=false;
-                                    if (isInQuotes) value+=currentText[j];
+                                    if (isInQuotes) value += currentText[j];
                                     if (!isInQuotes && name.length !== 0 && value.length !== 0) {
                                         if (!name.match(varRe).includes(currentText))
                                             throw new EmmetStringParsingError("attribute name syntax error", i);
@@ -148,33 +146,34 @@ export class PseudoHTML {
                                     }
                                 } else if (currentText[j] === '\'') {
                                     if (!quoteStart) {
-                                        quoteStart=true;
+                                        quoteStart = true;
                                         quoteChar = '\'';
                                     }
                                     if (quoteStart){
-                                        if (currentText[j-1] !== '\\') quoteStart=false;
+                                        if (currentText[j-1] !== '\\') quoteStart = false;
                                     }
                                 } else if (isName) {
-                                    name+=currentText[j];
-                                } else if(!isName) {
-                                    value+=currentText[j];
+                                    name += currentText[j];
+                                } else if (!isName) {
+                                    value += currentText[j];
                                 }
                             }
-                            if(!isName) throw new EmmetStringParsingError("missing value after =", i);
+                            if (!isName)
+                                throw new EmmetStringParsingError('missing value after =', i);
 
                         }
                         prevState = this.raw[i];
-                        currentText = "";
+                        currentText = '';
                         break;
                     case SpecialChars.EndInnerText:
-                        if (write) result["classList"].push(currentText);
+                        if (write) result.classList.push(currentText);
                         prevState = this.raw[i];
-                        currentText = "";
+                        currentText = '';
                         break;
                     case SpecialChars.Mult:
-                        if (write) result["classList"].push(currentText);
+                        if (write) result.classList.push(currentText);
                         prevState = this.raw[i];
-                        currentText = "";
+                        currentText = '';
                         multiplierNow = true;
                         break;
                 }
@@ -182,7 +181,6 @@ export class PseudoHTML {
                 currentText += this.raw[i];
             }
         }
-
 
         return result;
     }
