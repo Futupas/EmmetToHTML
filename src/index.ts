@@ -30,9 +30,12 @@ _global.parseAttributes = (s: string): any => {
 export function emmetToHTML(emmetString: string): HTMLElement[] {
     const preparedString = prepareString(emmetString);
     const pseudoHtml = makePseudoHtml(preparedString);
-    // Make real html from pseudoHtml
-    // Catch errors
-    return [ new HTMLDivElement() ];
+    const elements: HTMLElement[] = [];
+    for (const htmlEl of pseudoHtml) {
+        const rendered = htmlEl.render();
+        elements.push(...rendered);
+    }
+    return elements;
 }
 
 export function emmetToPseudoHTML(emmetString: string): PseudoHTML[] {
@@ -63,7 +66,6 @@ String.prototype.toHtml = () => {
     return emmetToHTML(str);
 };
 HTMLElement.prototype.appendChildren = (...elements: HTMLElement[]) => {
-    //todo refactor, make safety
     for (const el of elements) {
         (this as HTMLElement).appendChild(el);
     }

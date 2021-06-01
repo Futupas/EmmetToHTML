@@ -4,8 +4,6 @@ import { EmmetStringParsingError } from "./EmmetStringParsingError";
 export class PseudoHTML {
     public children: PseudoHTML[] = [];
 
-
-
     public constructor(
         public raw: string,
         public parent?: PseudoHTML,
@@ -125,7 +123,7 @@ export class PseudoHTML {
                             let value = '';
                             for (let j = 0; j < currentText.length; j++) {
                                 if (currentText[j] === ' ') {
-                                    if (isName) isName=false;
+                                    if (isName) isName = false;
                                     if (isInQuotes) value += currentText[j];
                                     if (!isInQuotes && name.length !== 0 && value.length !== 0) {
                                         if (!name.match(varRe).includes(currentText))
@@ -187,10 +185,30 @@ export class PseudoHTML {
 
     /** Does not append the element anywhere, only makes HTMLElement */
     public render(): HTMLElement[] {
-        // todo: write this
         const parsed = this.parse();
-        const tagName = parsed.tagName || 'div';
-        return [document.createElement(tagName)];
+        const elements: HTMLElement[] = [];
+        const quantity = parsed.quantity ?? 1;
+        for (let i = 0; i < quantity; i++) {
+            const el = document.createElement(parsed.tagName || 'div');
+            const classes = (parsed.classList ?? []).map(e => this.parseNumInString(e, i, quantity));
+            el.classList.add(...classes);
+            if (parsed.id) el.setAttribute('id', this.parseNumInString(parsed.id, i, quantity));
+            if (parsed.innerText) el.innerText = this.parseNumInString(parsed.innerText, i, quantity);
+            for (const attr of (parsed.attributes ?? [])) {
+                const attrName = this.parseNumInString(attr.name, i, quantity);
+                const attrValue = attr.value ? this.parseNumInString(attr.value, i, quantity) : '';
+                el.setAttribute(attrName, attrValue);
+            }
+
+            for (const child of this.children) {
+                const renderedPartsOfAChild = child.render();
+                for (const renderedChild of renderedPartsOfAChild) {
+                    el.appendChild(renderedChild);
+                }
+            }
+            elements.push(el);
+        }
+        return elements;
     }
 
 
