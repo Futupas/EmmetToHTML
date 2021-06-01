@@ -46,40 +46,42 @@ export class PseudoHTML {
             Mult = "*"
         }
 
-        let specialChars = ['', '#', '.', '[', '=', ']', '{', '}', '*', ' '];
+        const specialChars = ['', '#', '.', '[', '=', ']', '{', '}', '*', ' '];
 
 
         const result: IParsedPseudoHTML = {
             raw: this.raw,
+            attributes: [],
+            classList: [],
         };
 
 
         // code here
-        let prevState = "";
-        let currentText: string = "";
+        let prevState = '';
+        let currentText: string = '';
         let write: boolean = true;
 
-        let multiplierNow: boolean = false;
+        let multiplierNow = false;
 
-        let var_re = /([a-zA-Z]){1}([a-zA-Z]|-|_|[0-9])*/;
-        let tag_re = /(([a-zA-Z]){1}([a-zA-Z]|-|_|[0-9])*)*/;
+        const varRe = /([a-zA-Z]){1}([a-zA-Z]|-|_|[0-9])*/;
+        const tagRe = /(([a-zA-Z]){1}([a-zA-Z]|-|_|[0-9])*)*/;
 
-        for (let i: number = 0; i < this.raw.length; i++) {
-            if (prevState == SpecialChars.EndAttrib || prevState == SpecialChars.EndInnerText) write = false;
+        for (let i = 0; i < this.raw.length; i++) {
+            if (prevState === SpecialChars.EndAttrib || prevState === SpecialChars.EndInnerText) write = false;
             if (specialChars.includes(this.raw[i])) {
 
-                if (prevState == SpecialChars.InnerText && this.raw[i] == SpecialChars.EndInnerText) {
-                    if (write) result["innerText"] = currentText;
+                if (prevState === SpecialChars.InnerText && this.raw[i] === SpecialChars.EndInnerText) {
+                    if (write) result.innerText = currentText;
                     prevState = this.raw[i];
-                    currentText = "";
+                    currentText = '';
                 }
 
-                if (prevState == SpecialChars.Attrib && this.raw[i] == SpecialChars.EndAttrib) {
-                    if (write) result["attributes"].push({ "name": currentText });
+                if (prevState === SpecialChars.Attrib && this.raw[i] === SpecialChars.EndAttrib) {
+                    if (write) result.attributes.push({ name: currentText });
                     prevState = this.raw[i];
-                    currentText = "";
+                    currentText = '';
                 }
-                //Check previous special char if we found a new one
+                // Check previous special char if we found a new one
                 switch (prevState) {
                     case SpecialChars.InnerText:
                         break;
@@ -87,86 +89,78 @@ export class PseudoHTML {
                         break;
                     case SpecialChars.Tag:
                         if (write) {
-                            result["tagName"] = currentText;
-                            if (!currentText.match(tag_re).includes(currentText))
-                                throw new EmmetStringParsingError("tag name syntax error", i);
+                            result.tagName = currentText;
+                            if (!currentText.match(tagRe).includes(currentText))
+                                throw new EmmetStringParsingError('tag name syntax error', i);
                         }
                         prevState = this.raw[i];
-                        currentText = "";
+                        currentText = '';
                         break;
                     case SpecialChars.Id:
                         if (write) {
-                            result["id"] = currentText;
-                            if (!currentText.match(var_re).includes(currentText))
-                                throw new EmmetStringParsingError("id name syntax error", i);
+                            result.id = currentText;
+                            if (!currentText.match(varRe).includes(currentText))
+                                throw new EmmetStringParsingError('id name syntax error', i);
                         }
                         prevState = this.raw[i];
-                        currentText = "";
+                        currentText = '';
                         break;
                     case SpecialChars.Class:
                         if (write) {
-                            result["classList"].push(currentText);
-                            if (!currentText.match(var_re).includes(currentText))
-                                throw new EmmetStringParsingError("class name syntax error", i);
+                            result.classList.push(currentText);
+                            if (!currentText.match(varRe).includes(currentText))
+                                throw new EmmetStringParsingError('class name syntax error', i);
                         }
                         prevState = this.raw[i];
-                        currentText = "";
+                        currentText = '';
                         break;
                     case SpecialChars.EndAttrib:
                         if (write) {
 
-                            let isInQuotes: boolean = false;
-                            let quoteChar: string = "";
-                            let quoteStart : boolean = true;
+                            let isInQuotes = false;
+                            let quoteChar = '';
+                            let quoteStart = true;
 
-                            let isName: boolean = true;
+                            let isName = true;
 
-
-                            let name : string ="";
-                            let value : string="";
-                            for (let i: number = 0; i < currentText.length; i++) {
-                                   if(currentText[i]==" ") {
-                                       if(isName) isName=false;
-                                       if(isInQuotes) value+=currentText[i];
-                                       if(!isInQuotes && name.length!=0 && value.length!=0) {
-                                           if(!name.match(var_re).includes(currentText)) throw new EmmetStringParsingError("attribute name syntax error", i);
-                                           result["attributes"].push({"name" : name, "value" : value});
-                                       } 
-                                   } else
-                                   if(currentText[i]=="=") {
-                                       if(!isInQuotes) {
-                                          isName=false;
-                                       }
-
-                                   } else
-                                   if(currentText[i]=="\"") {
-                                    if(quoteStart==false) {
-                                        quoteStart=true;
-                                        quoteChar="\"";
-
-                                    } 
-                                    if(quoteStart==true){
-                                        if(currentText[i-1]!="\\") 
-                                        quoteStart=false;
+                            let name = '';
+                            let value = '';
+                            for (let j = 0; j < currentText.length; j++) {
+                                if (currentText[j] === ' ') {
+                                    if (isName) isName=false;
+                                    if (isInQuotes) value+=currentText[j];
+                                    if (!isInQuotes && name.length !== 0 && value.length !== 0) {
+                                        if (!name.match(varRe).includes(currentText))
+                                            throw new EmmetStringParsingError("attribute name syntax error", i);
+                                        result.attributes.push({name, value});
                                     }
-                                   } else
-                                   if(currentText[i]=="'") {
-                                    if(quoteStart==false) {
-                                        quoteStart=true;
-                                        quoteChar="'";
-                                    } 
-                                    if(quoteStart==true){
-                                        if(currentText[i-1]!="\\")
-                                        quoteStart=false;
- 
+                                } else if (currentText[j] === '=') {
+                                    if(!isInQuotes) {
+                                        isName=false;
                                     }
-                                   } else
-                                   if(isName) name+=currentText[i];
-                                   else 
-                                   if(!isName) value+=currentText[i];
-                                   
+                                } else if(currentText[j] === '\"') {
+                                    if (!quoteStart) {
+                                        quoteStart = true;
+                                        quoteChar = '\"';
+                                    }
+                                    if (quoteStart){
+                                        if (currentText[j-1] !== '\\') quoteStart = false;
+                                    }
+                                } else if (currentText[j] === '\'') {
+                                    if (!quoteStart) {
+                                        quoteStart=true;
+                                        quoteChar = '\'';
+                                    }
+                                    if (quoteStart){
+                                        if (currentText[j-1] !== '\\') quoteStart=false;
+                                    }
+                                } else if (isName) {
+                                    name+=currentText[j];
+                                } else if(!isName) {
+                                    value+=currentText[j];
+                                }
                             }
-                            if(isName==false) throw new EmmetStringParsingError("missing value after =", i);
+                            if(!isName) throw new EmmetStringParsingError("missing value after =", i);
 
                         }
                         prevState = this.raw[i];
@@ -183,14 +177,10 @@ export class PseudoHTML {
                         currentText = "";
                         multiplierNow = true;
                         break;
-
-
                 }
             } else {
                 currentText += this.raw[i];
             }
-
-
         }
 
 

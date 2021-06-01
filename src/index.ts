@@ -5,9 +5,14 @@ import { prepareString } from './PrepareEmmetString';
 
 
 const _global = (globalThis || window /* browser */ || global /* node */) as any;
+
 _global.globalFunction = (a: any) => {
     console.log(a);
     console.log("from global function");
+};
+_global.parseAttributes = (s: string): any => {
+    const pseudoHTML = new PseudoHTML(s);
+    return pseudoHTML.parse();
 };
 
 // String.prototype.toHtml = (a: any) => {
