@@ -180,7 +180,19 @@ export class PseudoHTML {
                 };
             })
             .filter(attr => attr.name);
-        console.log(result);
+        // if (!result.attributes.length) result.attributes = undefined;
+        result.classList = result.classList
+            .map(attr => attr.trim())
+            .filter(attr => attr && attr.length);
+        // if (!result.classList.length) result.classList = undefined;
+
+        result.id = result.id.trim();
+        if (!result.id.length) result.id = undefined;
+        result.innerText = result.innerText.trim();
+        if (!result.innerText.length) result.innerText = undefined;
+        result.tagName = result.tagName.trim();
+        if (!result.tagName.length) result.tagName = 'div';
+
         return result;
 
     }
