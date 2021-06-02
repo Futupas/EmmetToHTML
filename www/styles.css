@@ -2,15 +2,6 @@
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
-    background-color: black;
-}
-
-
-
-
-
-body {
-    font-family:'Courier New', Courier, monospace; resize: none;
 }
 
 body > div{
@@ -23,31 +14,6 @@ div#main{
     height: 100vh;
 }
 
-img#I{
-    margin-left: 20%;
-     width:60%;
-     max-width:60%; 
-     height:auto;
-}
-
-div#header{
-    background-color:#1E1323;
-}
-
-div#headertext {
-    color: #ACA2AD;
-    text-align:center; 
-    margin-left: 10%;
-    margin-top: 2%;
-    margin-bottom: 2%;
-    max-width: 80%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-input#inputtxt{
-    color: #ACA2AD;
-}
-
 div#input {
     position: absolute;
     top: 0px;
@@ -56,26 +22,11 @@ div#input {
     height: 8vh;
     padding: 5px;
 }
-
 div#htmlcode,
 div#preview{
     position: absolute;
     float: left;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    max-height: 30%;
-    color: #ACA2AD;
-    border: 2px solid gray;
-    border-radius: 8px;
-}
-
-
-div#htmlcode > div,
-div#preview > div{
-    margin: 5px;
-    margin-top: 0px;
-    /* border: 2px solid gray; */
-    padding: 10px;
+    overflow: auto;
 }
 
 @media (orientation: landscape) {
@@ -121,4 +72,10 @@ div#input > input:focus{
     border-color: black;
 }
 
-
+div#htmlcode > div,
+div#preview > div{
+    margin: 5px;
+    margin-top: 0px;
+    border: 2px solid gray;
+    padding: 10px;
+}
