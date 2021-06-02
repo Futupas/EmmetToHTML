@@ -9,10 +9,11 @@ mainInput.oninput = (e) => {
         /** @type {string} */
         const value = mainInput.value;
         /** @type {HTMLElement[]} */
-        const elements = value.toHtml();
+        const elements = emmetToHTML(value);
         console.log(emmetToPseudoHTML(value));
         
         let htmlText = '';
+        previewContainer.innerHTML = '';
         for (const element of elements) {
             previewContainer.appendChild(element);
             htmlText += element.outerHTML;

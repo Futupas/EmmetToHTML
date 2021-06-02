@@ -14,6 +14,7 @@ _global.parseAttributes = (s: string): any => {
     const pseudoHTML = new PseudoHTML(s);
     return pseudoHTML.parse();
 };
+_global.emmetToHTML = emmetToHTML;
 _global.emmetToPseudoHTML = (s: string): any => {
     const pseudoHTML = makePseudoHtml(s);
     return pseudoHTML.map(pHtml => {

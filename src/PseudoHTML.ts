@@ -10,7 +10,7 @@ export class PseudoHTML {
         public startingInString?: number,
     ) { }
 
-    public parse(): IParsedPseudoHTML {
+    public parse2(): IParsedPseudoHTML {
         /*
         input: "span.class1.class2#id1[hello=world num=8 countries='Kosovo DNR USSR' autocomplete]{some text $@3}*15"
         out: {
@@ -181,6 +181,102 @@ export class PseudoHTML {
         }
 
         return result;
+    }
+    public parse(): IParsedPseudoHTML {
+        /*
+        input: "span.class1.class2#id1[hello=world num=8 countries='Kosovo DNR USSR' autocomplete]{some text $@3}*15"
+        out: {
+            raw: "span.class1.class$#id1[hello=world num=8 countries='Kosovo DNR USSR' autocomplete]{some text $@3}*15",
+            tagName: 'span',
+            id: 'id1',
+            classList: ['class1', 'class$'],
+            attributes: [{
+                name: 'hello', value: 'world'
+            }, {
+                name: 'num', value: '8'
+            }, {
+                name: 'countries', value: 'Kosovo DNR USSR'
+            }, {
+                name: 'autocomplete'
+            }],
+            innerText: 'some text $@3',
+            quantity: 15,
+        }
+        useful docs: https://docs.emmet.io/cheat-sheet/
+        */
+        const raw = this.raw;
+        const result: IParsedPseudoHTML = {
+            raw,
+            attributes: [],
+            classList: [],
+            id: '',
+            innerText: '',
+            quantity: undefined,
+            tagName: '',
+        };
+
+        const enum ParsedType {
+            tag,
+            class,
+            id,
+            innerText,
+            quantity,
+        }
+        let currentParsing = ParsedType.tag;
+
+        for (let i = 0; i < raw.length; i++) {
+            const c = raw[i];
+            // Todo: support '\{'
+            //todo: type attr
+
+            if (currentParsing === ParsedType.innerText) {
+                if (c === '}') {
+                    currentParsing = undefined;
+                } else {
+                    result.innerText += c;
+                    continue;
+                }
+            }
+
+            switch(c) {
+                case '.':
+                    result.classList.push('');
+                    currentParsing = ParsedType.class;
+                    break;
+                case '#':
+                    currentParsing = ParsedType.id;
+                    break;
+                case '{':
+                    currentParsing = ParsedType.innerText;
+                    break;
+                case '*':
+                    currentParsing = ParsedType.quantity;
+                    break;
+                default:
+                    switch(currentParsing) {
+                        case ParsedType.class:
+                            result.classList[result.classList.length - 1] += c;
+                            break;
+                        case ParsedType.tag:
+                            result.tagName += c;
+                            break;
+                        case ParsedType.id:
+                            result.id += c;
+                            break;
+                        case ParsedType.quantity:
+                            const numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+                            if (!numbers.includes(c))
+                                throw new EmmetStringParsingError('Unknown number', i + (this.startingInString || 0));
+                            const newNum = (result.quantity || 0) * 10 + (+c);
+                            result.quantity = newNum;
+                            break;
+                    }
+            }
+        }
+
+        console.log(result);
+        return result;
+
     }
 
     /** Does not append the element anywhere, only makes HTMLElement */
