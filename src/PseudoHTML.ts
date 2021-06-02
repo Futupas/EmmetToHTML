@@ -62,9 +62,11 @@ export class PseudoHTML {
         const varRe = /([a-zA-Z]){1}([a-zA-Z]|-|_|[0-9])*/;
         const tagRe = /(([a-zA-Z]){1}([a-zA-Z]|-|_|[0-9])*)*/;
 
-        for (let i = 0; i < this.raw.length; i++) {
+        for (let i = 0; i < this.raw.length+1; i++) {
             if (prevState === SpecialChars.EndAttrib || prevState === SpecialChars.EndInnerText) write = false;
-            if (specialChars.includes(this.raw[i])) {
+            let endOfLine : boolean = false;
+            if(i==this.raw.length) {i-=1; endOfLine=true;}
+            if (specialChars.includes(this.raw[i]) || endOfLine) {
 
                 if (prevState === SpecialChars.InnerText && this.raw[i] === SpecialChars.EndInnerText) {
                     if (write) result.innerText = currentText;
@@ -164,12 +166,12 @@ export class PseudoHTML {
                         currentText = '';
                         break;
                     case SpecialChars.EndInnerText:
-                        if (write) result.classList.push(currentText);
+                        if (write) result.innerText = currentText;
                         prevState = this.raw[i];
                         currentText = '';
                         break;
                     case SpecialChars.Mult:
-                        if (write) result.classList.push(currentText);
+                        if (write) result.quantity = parseInt(currentText);
                         prevState = this.raw[i];
                         currentText = '';
                         multiplierNow = true;
