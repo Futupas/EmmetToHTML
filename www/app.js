@@ -4,6 +4,7 @@ const codePreviewContainer = document.querySelector('#htmlcode > div > pre');
 const previewContainer = document.querySelector('#preview > div');
 
 const mainInput = document.querySelector('#input > input');
+mainInput.value = 'div.vvvv>span>ul>li*5{dd$$}';
 mainInput.oninput = (e) => {
     try{
         /** @type {string} */
@@ -23,6 +24,7 @@ mainInput.oninput = (e) => {
         console.error(ex);
     }
 }
+mainInput.oninput();
 
 /**
  * 
@@ -34,17 +36,29 @@ function prettyHtml(source) {
     const eol = '\n';
     let level = 0;
     let closing = false;
-    // let parsingPosition = 'outside'; // insideOpeningTag, insideClosingTag, innerText, outside
+    let insideTag = false;
+    let innerText = false;
     for (let i = 0; i < source.length; i++) {
         const c = source[i];
-        // const closing = i !== source.length - 1 && c === '<' && source[i+1] === '/';
         if (c === '<') {
+            insideTag = true;
+            innerText = false;
             if (i !== source.length - 1 && source[i+1] === '/') {
                 closing = true;
             } else {
                 closing = false;
             }
         }
+        if (c === '>') insideTag = false;
+
+        if (c !== '<' && c !== '>' && !insideTag && !innerText) {
+            innerText = true;
+            const newStr = eol + makeTab(tab, level);
+            source = replaceStrInStr(source, i, newStr);
+            i += newStr.length;
+            continue;
+        }
+
         if (c === '<' && !closing) {
             const newStr = eol + makeTab(tab, level);
             source = replaceStrInStr(source, i, newStr);
