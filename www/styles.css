@@ -5,13 +5,22 @@
     background-color: black;
 }
 
-
-
-
-
 body {
-    font-family:'Courier New', Courier, monospace; resize: none;
+    font-family:'Consolas', monospace; resize: none;
 }
+
+body::-webkit-scrollbar {
+    width: 1em;
+  }
+   
+  body::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(30, 19, 35, 1);
+  }
+   
+  body::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+  }
 
 body > div{
     position: relative;
@@ -30,6 +39,29 @@ img#I{
      height:auto;
 }
 
+div#ghlink{
+    max-height: 5%;
+    height: 5%;
+    background-color:#1E1323;
+    margin-top: 5%;
+    max-height: 10%;
+    height: 10%;
+}
+img#githubIcon{
+    background-color: transparent;
+    width: 20%;
+    max-width: 20%;
+}
+
+img#githubIcon:hover{
+    filter: invert(0.5);
+}
+
+div#ghlink > a {
+    width: 30%;
+    max-width: 30%;
+}
+
 div#header{
     background-color:#1E1323;
 }
@@ -44,30 +76,84 @@ div#headertext {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+
+p#bottext {
+    color: black;
+    background-color: #1E1323;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 700;
+}
+
+
+
 input#inputtxt{
     color: #ACA2AD;
+    font-family:'Consolas', monospace; resize: none;
 }
 
 div#input {
     position: absolute;
     top: 0px;
     left: 0px;
-    width: 100%;
+    width: 97%;
+    margin-left: 1%;
     height: 8vh;
     padding: 5px;
 }
 
+
 div#htmlcode,
 div#preview{
+    margin-top: 2%;
     position: absolute;
     float: left;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    max-height: 30%;
+    overflow: auto;
     color: #ACA2AD;
     border: 2px solid gray;
-    border-radius: 8px;
+    max-width: 48%;
 }
+
+
+div#preview::-webkit-scrollbar {
+    width: 1em;
+  }
+   
+
+div#preview::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+   
+
+div#preview::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+  }
+
+  div#htmlcode::-webkit-scrollbar {
+    width: 1em;
+  }
+   
+
+div#htmlcode::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+   
+
+div#htmlcode::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+  }
+
+div#htmlcode{
+    margin-left: 1%;
+    height:auto;
+}
+
+div#preview{
+    margin-right: 1%;
+    height:auto;
+}
+
 
 
 div#htmlcode > div,

@@ -2,9 +2,11 @@
 
 const codePreviewContainer = document.querySelector('#htmlcode > div > pre');
 const previewContainer = document.querySelector('#preview > div');
+const githubLink = document.querySelector('#preview > div');
+
 
 const mainInput = document.querySelector('#input > input');
-mainInput.value = 'div.vvvv>span>ul>li*5{dd$$}';
+mainInput.value = 'div.vvvv>span>ul>li*5{typeEmmetHere$$}';
 mainInput.oninput = (e) => {
     try{
         /** @type {string} */
