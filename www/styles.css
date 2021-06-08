@@ -33,10 +33,11 @@ div#main{
 }
 
 img#I{
-    margin-left: 20%;
+    margin-left: 5%;
      width:60%;
      max-width:60%; 
      height:auto;
+     display: inline
 }
 
 div#ghlink{
@@ -46,11 +47,13 @@ div#ghlink{
     margin-top: 5%;
     max-height: 10%;
     height: 10%;
+    display: inline;
 }
 img#githubIcon{
     background-color: transparent;
-    width: 20%;
-    max-width: 20%;
+    width: 15%;
+    max-width: 15%;
+    display: inline;
 }
 
 img#githubIcon:hover{
@@ -64,6 +67,7 @@ div#ghlink > a {
 
 div#header{
     background-color:#1E1323;
+    text-align: left;
 }
 
 div#headertext {
