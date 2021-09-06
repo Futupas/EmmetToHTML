@@ -188,7 +188,7 @@ export class PseudoHTML {
 
         result.id = result.id.trim();
         if (!result.id.length) result.id = undefined;
-        result.innerText = result.innerText.trim();
+        // result.innerText = result.innerText.trim();
         if (!result.innerText.length) result.innerText = undefined;
         result.tagName = result.tagName.trim();
         if (!result.tagName.length) result.tagName = 'div';
